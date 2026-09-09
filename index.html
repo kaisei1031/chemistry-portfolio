@@ -3,47 +3,602 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070b12">
   <title>Chemistry Portfolio | kaisei1031</title>
   <meta name="description" content="応用化学・高分子材料に関するポートフォリオ">
   <style>
-    :root{--bg:#0b1020;--card:#121a2f;--text:#eef2ff;--muted:#a9b3cc;--accent:#8ab4ff;--line:#263252}
+    :root{
+      --bg:#070b12;
+      --bg2:#0a101b;
+      --panel:#0d1421;
+      --panel2:#101a2a;
+      --text:#f2f6fb;
+      --muted:#8b98aa;
+      --line:rgba(166,190,219,.16);
+      --cyan:#78e6ff;
+      --blue:#7397ff;
+      --green:#73f0cf;
+      --shadow:0 28px 90px rgba(0,0,0,.42);
+    }
+
     *{box-sizing:border-box}
-    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;background:linear-gradient(160deg,#09101f,#11182b 55%,#0c1323);color:var(--text);line-height:1.75}
-    main{max-width:920px;margin:0 auto;padding:72px 24px}
-    .eyebrow{color:var(--accent);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.82rem}
-    h1{font-size:clamp(2rem,6vw,4rem);line-height:1.12;margin:.35rem 0 1rem}
-    .lead{max-width:700px;color:var(--muted);font-size:1.08rem}
-    .card{margin-top:48px;padding:30px;border:1px solid var(--line);border-radius:18px;background:rgba(18,26,47,.82);box-shadow:0 18px 50px rgba(0,0,0,.22)}
-    h2{margin:0 0 8px;font-size:1.45rem}
-    .sub{color:var(--muted);margin:0 0 20px}
-    .tags{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
-    .tag{border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:#cdd6ee;font-size:.9rem}
-    .button{display:inline-block;margin-top:8px;padding:12px 18px;border-radius:10px;background:#eef2ff;color:#0b1020;text-decoration:none;font-weight:800}
-    .button:hover{opacity:.9}
-    footer{margin-top:56px;color:#7f8aa5;font-size:.9rem}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%,rgba(115,151,255,.12),transparent 26rem),
+        radial-gradient(circle at 86% 18%,rgba(120,230,255,.08),transparent 24rem),
+        linear-gradient(180deg,#060a11 0%,#08101a 54%,#060a11 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.26;
+      background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+      background-size:44px 44px;
+      mask-image:linear-gradient(to bottom,black,transparent 88%);
+    }
+
+    a{color:inherit}
+    .shell{width:min(1180px,calc(100% - 34px));margin:0 auto}
+
+    header{
+      position:sticky;
+      top:14px;
+      z-index:20;
+      margin-top:14px;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:12px 14px 12px 18px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(8,13,22,.74);
+      backdrop-filter:blur(18px);
+      box-shadow:0 14px 45px rgba(0,0,0,.24);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.015em;
+    }
+
+    .brand-mark{
+      width:34px;height:34px;border-radius:11px;
+      display:grid;place-items:center;
+      background:linear-gradient(145deg,rgba(120,230,255,.14),rgba(115,151,255,.08));
+      border:1px solid rgba(120,230,255,.24);
+      box-shadow:inset 0 0 20px rgba(120,230,255,.05);
+      font-size:.9rem;
+    }
+
+    .brand small{
+      display:block;
+      color:var(--muted);
+      font-size:.68rem;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-weight:700;
+      margin-top:1px;
+    }
+
+    .nav-links{display:flex;gap:4px;flex-wrap:wrap}
+    .nav-links a{
+      text-decoration:none;
+      color:#aab6c5;
+      font-size:.89rem;
+      padding:8px 11px;
+      border-radius:10px;
+    }
+    .nav-links a:hover{background:rgba(255,255,255,.045);color:#fff}
+
+    .hero{
+      min-height:680px;
+      display:grid;
+      grid-template-columns:1.13fr .87fr;
+      align-items:center;
+      gap:46px;
+      padding:86px 0 74px;
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      color:var(--cyan);
+      font-size:.75rem;
+      font-weight:800;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+
+    .kicker::before{
+      content:"";
+      width:28px;height:1px;background:linear-gradient(90deg,var(--cyan),transparent);
+    }
+
+    h1{
+      margin:18px 0 22px;
+      max-width:760px;
+      font-size:clamp(3rem,7.3vw,6.3rem);
+      line-height:.98;
+      letter-spacing:-.055em;
+      font-weight:760;
+    }
+
+    .gradient{
+      background:linear-gradient(90deg,#ffffff 0%,#bcd6ff 54%,#7ceaff 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .lead{
+      max-width:650px;
+      color:#9ba8b9;
+      font-size:clamp(1rem,1.7vw,1.14rem);
+      line-height:1.9;
+      margin:0;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:30px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      font-weight:800;
+      font-size:.94rem;
+      border-radius:13px;
+      padding:13px 17px;
+      transition:.18s ease;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,#f5f9ff,#bedbff);
+      color:#07101a;
+      box-shadow:0 12px 35px rgba(115,151,255,.18);
+    }
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 42px rgba(115,151,255,.27)}
+    .btn-ghost{border:1px solid var(--line);color:#c9d4e1;background:rgba(255,255,255,.025)}
+    .btn-ghost:hover{border-color:rgba(120,230,255,.28);background:rgba(120,230,255,.045)}
+
+    .micro{
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
+      margin-top:34px;
+      color:#6f7d8f;
+      font-size:.8rem;
+      letter-spacing:.02em;
+    }
+
+    .micro span{display:flex;align-items:center;gap:7px}
+    .dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(115,240,207,.6)}
+
+    .molecule{
+      position:relative;
+      min-height:500px;
+      display:grid;
+      place-items:center;
+    }
+
+    .orb{
+      position:absolute;
+      width:390px;
+      height:390px;
+      border-radius:50%;
+      border:1px solid rgba(120,230,255,.13);
+      background:
+        radial-gradient(circle at 50% 50%,rgba(115,151,255,.09),transparent 55%),
+        radial-gradient(circle at 60% 30%,rgba(120,230,255,.08),transparent 38%);
+      box-shadow:
+        inset 0 0 80px rgba(115,151,255,.035),
+        0 0 100px rgba(120,230,255,.025);
+    }
+
+    .orb::before,.orb::after{
+      content:"";
+      position:absolute;
+      inset:38px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.07);
+      transform:rotate(24deg) scaleY(.48);
+    }
+    .orb::after{transform:rotate(-38deg) scaleY(.64);border-color:rgba(115,151,255,.12)}
+
+    .mol-svg{
+      position:relative;
+      width:min(100%,470px);
+      filter:drop-shadow(0 0 24px rgba(120,230,255,.1));
+    }
+
+    .node{fill:#0b1422;stroke:#86ecff;stroke-width:2}
+    .node.alt{stroke:#8da7ff}
+    .bond{stroke:rgba(161,205,255,.52);stroke-width:2}
+    .bond.soft{stroke:rgba(115,240,207,.30);stroke-dasharray:5 7}
+    .label{fill:#b9c7d9;font-size:12px;font-weight:700;letter-spacing:.06em}
+
+    .section{padding:20px 0 84px}
+
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:22px;
+    }
+
+    .section-num{
+      color:#536071;
+      font-size:.75rem;
+      font-weight:800;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    h2{
+      margin:0;
+      font-size:clamp(1.8rem,4vw,3.1rem);
+      letter-spacing:-.035em;
+      line-height:1.12;
+    }
+
+    .section-note{color:var(--muted);max-width:480px;font-size:.94rem;margin:0}
+
+    .feature{
+      display:grid;
+      grid-template-columns:1.07fr .93fr;
+      border:1px solid var(--line);
+      border-radius:26px;
+      overflow:hidden;
+      background:linear-gradient(145deg,rgba(14,22,36,.92),rgba(9,15,25,.92));
+      box-shadow:var(--shadow);
+    }
+
+    .feature-main{padding:38px}
+    .feature-side{
+      position:relative;
+      padding:34px;
+      border-left:1px solid var(--line);
+      background:
+        linear-gradient(180deg,rgba(115,151,255,.055),rgba(120,230,255,.018));
+    }
+
+    .report-no{
+      font-size:clamp(4.5rem,9vw,7.5rem);
+      line-height:.8;
+      letter-spacing:-.08em;
+      font-weight:850;
+      color:rgba(255,255,255,.045);
+      margin-bottom:22px;
+    }
+
+    .report-label{
+      color:var(--green);
+      font-size:.74rem;
+      font-weight:800;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+    }
+
+    .report-title{
+      margin:12px 0 10px;
+      font-size:clamp(1.7rem,3.6vw,2.75rem);
+      line-height:1.18;
+      letter-spacing:-.035em;
+    }
+
+    .report-sub{margin:0;color:#8997a9;line-height:1.8}
+    .report-copy{margin:25px 0 0;color:#b6c1ce;line-height:1.85}
+
+    .tags{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:24px;
+    }
+    .tag{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:#98a9bd;
+      background:rgba(255,255,255,.018);
+      font-size:.79rem;
+    }
+
+    .feature-actions{margin-top:27px}
+
+    .metric{
+      padding:17px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+    .metric:first-of-type{padding-top:0}
+    .metric:last-child{border-bottom:0}
+    .metric b{
+      display:block;
+      font-size:.75rem;
+      color:#657489;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+      margin-bottom:6px;
+    }
+    .metric strong{
+      display:block;
+      font-size:1.05rem;
+      color:#e9f0f8;
+      margin-bottom:4px;
+    }
+    .metric p{margin:0;color:#8795a7;font-size:.89rem;line-height:1.65}
+
+    .concepts{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .concept{
+      min-height:170px;
+      padding:22px;
+      border:1px solid var(--line);
+      border-radius:19px;
+      background:linear-gradient(145deg,rgba(14,21,34,.78),rgba(9,14,23,.7));
+      transition:.18s ease;
+    }
+    .concept:hover{transform:translateY(-3px);border-color:rgba(120,230,255,.22)}
+    .concept i{
+      display:block;
+      color:#506076;
+      font-style:normal;
+      font-size:.71rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
+    .concept strong{display:block;font-size:1.04rem;margin-bottom:8px}
+    .concept p{margin:0;color:#8291a4;font-size:.87rem;line-height:1.7}
+
+    .quote{
+      margin-top:14px;
+      padding:30px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:linear-gradient(90deg,rgba(115,151,255,.055),rgba(120,230,255,.025));
+      color:#c2cfdd;
+      font-size:clamp(1rem,2vw,1.22rem);
+      line-height:1.8;
+    }
+
+    footer{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+      padding:24px 0 40px;
+      border-top:1px solid var(--line);
+      color:#647386;
+      font-size:.82rem;
+    }
+
+    @media(max-width:920px){
+      .hero{grid-template-columns:1fr;min-height:auto;padding-top:70px}
+      .molecule{min-height:390px}
+      .feature{grid-template-columns:1fr}
+      .feature-side{border-left:0;border-top:1px solid var(--line)}
+      .concepts{grid-template-columns:1fr 1fr}
+    }
+
+    @media(max-width:620px){
+      .shell{width:min(100% - 22px,1180px)}
+      .nav-links{display:none}
+      .hero{padding:56px 0 58px}
+      h1{font-size:clamp(2.7rem,15vw,4.2rem)}
+      .molecule{min-height:310px}
+      .orb{width:290px;height:290px}
+      .section{padding-bottom:66px}
+      .section-head{align-items:flex-start;flex-direction:column}
+      .feature-main,.feature-side{padding:24px}
+      .concepts{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
-  <main>
-    <div class="eyebrow">Chemistry Portfolio</div>
-    <h1>応用化学・高分子材料</h1>
-    <p class="lead">高分子化学・材料科学を中心に、身近な工業製品の性能を分子・材料設計の観点から整理したポートフォリオです。</p>
 
-    <section class="card">
-      <h2>タイヤのグリップを支える高分子化学</h2>
-      <p class="sub">― 粘弾性・ガラス転移・フィラーから考えるトレッドコンパウンド設計 ―</p>
-      <div class="tags">
-        <span class="tag">Polymer Chemistry</span>
-        <span class="tag">Viscoelasticity</span>
-        <span class="tag">Glass Transition</span>
-        <span class="tag">Fillers</span>
-        <span class="tag">Tire Materials</span>
+  <header class="shell">
+    <div class="nav">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <div>
+          Chemistry Portfolio
+          <small>Applied Chemistry / Polymer Materials</small>
+        </div>
       </div>
-      <p>タイヤトレッドのグリップ性能を、粘弾性、Tg、カーボンブラック、シリカ、性能間のトレードオフという観点から整理しています。</p>
-      <a class="button" href="tire-polymer-chemistry.pdf">PDFを開く</a>
+      <nav class="nav-links">
+        <a href="#report">Report</a>
+        <a href="#concepts">Concepts</a>
+        <a href="tire-polymer-chemistry.pdf">PDF</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <div class="kicker">Materials × Performance</div>
+        <h1><span class="gradient">分子から、性能へ。</span><br>高分子材料を読む。</h1>
+        <p class="lead">
+          身近な工業製品の性能を、高分子の分子運動・粘弾性・配合設計から読み解くポートフォリオ。
+          材料の基礎物性が、実際のグリップや転がり抵抗にどうつながるのかを整理します。
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="tire-polymer-chemistry.pdf">Featured report →</a>
+          <a class="btn btn-ghost" href="#report">概要を見る</a>
+        </div>
+        <div class="micro">
+          <span><i class="dot"></i> Polymer Chemistry</span>
+          <span>Viscoelasticity</span>
+          <span>Glass Transition</span>
+          <span>Fillers</span>
+        </div>
+      </div>
+
+      <div class="molecule" aria-hidden="true">
+        <div class="orb"></div>
+        <svg class="mol-svg" viewBox="0 0 500 500" role="img">
+          <line class="bond" x1="114" y1="284" x2="188" y2="210"/>
+          <line class="bond" x1="188" y1="210" x2="271" y2="247"/>
+          <line class="bond" x1="271" y1="247" x2="347" y2="178"/>
+          <line class="bond" x1="271" y1="247" x2="356" y2="316"/>
+          <line class="bond" x1="188" y1="210" x2="173" y2="126"/>
+          <line class="bond soft" x1="114" y1="284" x2="158" y2="372"/>
+          <line class="bond soft" x1="356" y1="316" x2="413" y2="378"/>
+          <line class="bond soft" x1="347" y1="178" x2="403" y2="112"/>
+
+          <circle class="node" cx="114" cy="284" r="19"/>
+          <circle class="node alt" cx="188" cy="210" r="23"/>
+          <circle class="node" cx="271" cy="247" r="25"/>
+          <circle class="node alt" cx="347" cy="178" r="18"/>
+          <circle class="node" cx="356" cy="316" r="22"/>
+          <circle class="node" cx="173" cy="126" r="15"/>
+          <circle class="node alt" cx="158" cy="372" r="14"/>
+          <circle class="node" cx="413" cy="378" r="13"/>
+          <circle class="node alt" cx="403" cy="112" r="12"/>
+
+          <text class="label" x="91" y="329">POLYMER</text>
+          <text class="label" x="294" y="364">FILLER</text>
+          <text class="label" x="298" y="132">INTERACTION</text>
+        </svg>
+      </div>
     </section>
 
-    <footer>© 2026 kaisei1031</footer>
+    <section class="section" id="report">
+      <div class="section-head">
+        <div>
+          <div class="section-num">01 / Featured report</div>
+          <h2>タイヤのグリップを支える<br>高分子化学</h2>
+        </div>
+        <p class="section-note">
+          粘弾性・ガラス転移・フィラーから、トレッドコンパウンドの性能設計を考える。
+        </p>
+      </div>
+
+      <article class="feature">
+        <div class="feature-main">
+          <div class="report-label">Polymer Science / Tire Materials</div>
+          <h3 class="report-title">グリップは「柔らかいゴム」だけでは説明できない。</h3>
+          <p class="report-copy">
+            タイヤトレッドは粘弾性体であり、路面凹凸による変形、ヒステリシス、
+            温度・変形速度、さらにカーボンブラックやシリカなどのフィラー配合が性能に関わります。
+            本レポートでは、それらを一つの材料設計の流れとして整理しています。
+          </p>
+
+          <div class="tags">
+            <span class="tag">tan δ</span>
+            <span class="tag">Tg</span>
+            <span class="tag">Hysteresis</span>
+            <span class="tag">Carbon Black</span>
+            <span class="tag">Silica</span>
+            <span class="tag">Magic Triangle</span>
+          </div>
+
+          <div class="feature-actions">
+            <a class="btn btn-primary" href="tire-polymer-chemistry.pdf">PDFを読む →</a>
+          </div>
+        </div>
+
+        <aside class="feature-side">
+          <div class="report-no">01</div>
+
+          <div class="metric">
+            <b>Dynamic Viscoelasticity</b>
+            <strong>0 ℃付近の tan δ</strong>
+            <p>ウェットグリップ性能を比較する代表的な実験指標。</p>
+          </div>
+
+          <div class="metric">
+            <b>Energy Loss</b>
+            <strong>60 ℃付近の tan δ</strong>
+            <p>転がり抵抗性能を比較する代表的な実験指標。</p>
+          </div>
+
+          <div class="metric">
+            <b>Material Design</b>
+            <strong>性能は単独で最大化しない</strong>
+            <p>グリップ・耐摩耗性・転がり抵抗などのバランスを設計する。</p>
+          </div>
+        </aside>
+      </article>
+    </section>
+
+    <section class="section" id="concepts">
+      <div class="section-head">
+        <div>
+          <div class="section-num">02 / Core concepts</div>
+          <h2>性能を支える、4つの視点。</h2>
+        </div>
+      </div>
+
+      <div class="concepts">
+        <article class="concept">
+          <i>01 / Viscoelasticity</i>
+          <strong>粘弾性</strong>
+          <p>変形で蓄えられるエネルギーと、熱として散逸するエネルギー。その比率が摩擦挙動に関わる。</p>
+        </article>
+
+        <article class="concept">
+          <i>02 / Glass Transition</i>
+          <strong>ガラス転移</strong>
+          <p>高分子鎖の運動性は温度で変化する。タイヤを「温める」現象もこの温度依存性と関係する。</p>
+        </article>
+
+        <article class="concept">
+          <i>03 / Fillers</i>
+          <strong>フィラー</strong>
+          <p>カーボンブラックやシリカは補強だけでなく、粘弾性や耐摩耗性、分散状態にも影響する。</p>
+        </article>
+
+        <article class="concept">
+          <i>04 / Trade-offs</i>
+          <strong>トレードオフ</strong>
+          <p>ウェット性能、転がり抵抗、耐摩耗性。実用材料では複数性能の両立が設計課題になる。</p>
+        </article>
+      </div>
+
+      <div class="quote">
+        優れた材料とは、一つの物性値が最も高い材料ではなく、
+        実際の使用環境で要求される複数の性能を必要な水準で両立させた材料である。
+      </div>
+    </section>
   </main>
+
+  <footer class="shell">
+    <span>© 2026 kaisei1031 — Chemistry Portfolio</span>
+    <span>Applied Chemistry / Polymer Materials</span>
+  </footer>
+
 </body>
 </html>
